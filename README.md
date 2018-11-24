@@ -1,4 +1,4 @@
-# DahuaSunriseSunset
+# IPCameraSunriseSunset
 A Windows Service which changes the profile of Dahua and Hikvision cameras between Night and Day at each sunset and sunrise.
 
 ## Requirements
@@ -8,8 +8,8 @@ A Windows Service which changes the profile of Dahua and Hikvision cameras betwe
 
 ## Usage
 
-1) Download from here: https://github.com/bp2008/DahuaSunriseSunset/releases
-2) Run `DahuaSunriseSunset.exe` to open the service manager GUI.
+1) Download and compile code (There are no releases yet)
+2) Debug in Visual Studio
 
 ![Service Manager](http://i.imgur.com/qIJZPOT.png)
 

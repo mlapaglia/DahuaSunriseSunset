@@ -49,10 +49,10 @@ namespace SunriseSunset
 
 			try
 			{
-				cfg.latitude = double.Parse(txtLat.Text);
-				cfg.longitude = double.Parse(txtLon.Text);
-				cfg.sunriseOffsetHours = double.Parse(txtRiseOffset.Text);
-				cfg.sunsetOffsetHours = double.Parse(txtSetOffset.Text);
+				cfg.Latitude = double.Parse(txtLat.Text);
+				cfg.Longitude = double.Parse(txtLon.Text);
+				cfg.SunriseOffsetHours = double.Parse(txtRiseOffset.Text);
+				cfg.SunsetOffsetHours = double.Parse(txtSetOffset.Text);
 				cfg.Cameras = BuildCameraList();
 
 				cfg.Save();
@@ -78,10 +78,10 @@ namespace SunriseSunset
 			cfg.Load();
 			cfg.SaveIfNoExist();
 
-			txtLat.Text = cfg.latitude.ToString();
-			txtLon.Text = cfg.longitude.ToString();
-			txtRiseOffset.Text = cfg.sunriseOffsetHours.ToString();
-			txtSetOffset.Text = cfg.sunsetOffsetHours.ToString();
+			txtLat.Text = cfg.Latitude.ToString();
+			txtLon.Text = cfg.Longitude.ToString();
+			txtRiseOffset.Text = cfg.SunriseOffsetHours.ToString();
+			txtSetOffset.Text = cfg.SunsetOffsetHours.ToString();
 
 			foreach (CameraDefinition cam in cfg.Cameras)
 				lbCameras.Items.Add(cam);

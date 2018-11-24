@@ -8,10 +8,10 @@ namespace SunriseSunset
 	[XmlInclude(typeof(HikvisionCameraDefinition))]
 	public class SunriseSunsetConfig : SerializableObjectBase
 	{
-		public double latitude = 0;
-		public double longitude = 0;
-		public double sunriseOffsetHours = 0;
-		public double sunsetOffsetHours = 0;
+		public double Latitude = 0;
+		public double Longitude = 0;
+		public double SunriseOffsetHours = 0;
+		public double SunsetOffsetHours = 0;
 		public List<CameraDefinition> Cameras = new List<CameraDefinition>();
 	}
 }

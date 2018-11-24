@@ -9,10 +9,10 @@ namespace SunriseSunset
 {
 	public static class ServiceWrapper
 	{
-		private static object syncLockStartStop = new object();
-		private static object syncLockCameraControl = new object();
+		private static object SyncLockStartStop = new object();
+		private static object SyncLockCameraControl = new object();
 
-		private static Thread thrRunner;
+		private static Thread threadRunner;
 
 		static ServiceWrapper()
 		{
@@ -21,26 +21,26 @@ namespace SunriseSunset
 
 		public static void Start()
 		{
-			lock (syncLockStartStop)
+			lock (SyncLockStartStop)
 			{
 				Stop();
-				thrRunner = new Thread(scheduler);
-				thrRunner.IsBackground = true;
-				thrRunner.Name = "Scheduler";
-				thrRunner.Start();
+				threadRunner = new Thread(Scheduler);
+				threadRunner.IsBackground = true;
+				threadRunner.Name = "Scheduler";
+				threadRunner.Start();
 			}
 		}
 
 		public static void Stop()
 		{
-			lock (syncLockStartStop)
+			lock (SyncLockStartStop)
 			{
-				thrRunner?.Abort();
-				thrRunner = null;
+				threadRunner?.Abort();
+				threadRunner = null;
 			}
 		}
 
-		private static void scheduler()
+		private static void Scheduler()
 		{
 			try
 			{
@@ -48,42 +48,52 @@ namespace SunriseSunset
 				{
 					try
 					{
-						// Calculate the next SunEvent
 						SunEvent nextEvent = null;
 
-						SunriseSunsetConfig cfg = new SunriseSunsetConfig();
-						cfg.Load();
+						SunriseSunsetConfig sunEventConfig = new SunriseSunsetConfig();
+						sunEventConfig.Load();
+						
+						SunHelper.SunHelperCalculation sunCalculation = SunHelper.CalculateDailySunEvents(sunEventConfig.Latitude,
+							sunEventConfig.Longitude,
+							sunEventConfig.SunriseOffsetHours,
+							sunEventConfig.SunsetOffsetHours);
 
-						DateTime rise, set;
-						bool timeZoneAndLongitudeAreCompatible;
-						SunHelper.Calc(cfg.latitude, cfg.longitude, out rise, out set, out timeZoneAndLongitudeAreCompatible, cfg.sunriseOffsetHours, cfg.sunsetOffsetHours);
-						if (!timeZoneAndLongitudeAreCompatible)
+						if (!sunCalculation.TimeZoneAndLongitudeAreCompatible)
 						{
 							Logger.Debug("Pausing scheduler for 1 day due to incompatible time zone and longitude. Please fix the problem and restart the service.");
 							Thread.Sleep(TimeSpan.FromDays(1));
 							continue;
 						}
-						if (rise < set)
-							nextEvent = new SunEvent(rise, true);
-						else if (set < rise)
-							nextEvent = new SunEvent(set, false);
+
+						if (sunCalculation.NextRise < sunCalculation.NextSet)
+						{
+							nextEvent = new SunEvent(sunCalculation.NextRise, true);
+						}
+						else if (sunCalculation.NextRise < sunCalculation.NextRise)
+						{
+							nextEvent = new SunEvent(sunCalculation.NextSet, false);
+						}
 						else
-							nextEvent = new SunEvent(rise, false); // Rise and set are at the same time ... lets just call it a sunset.
+						{
+							nextEvent = new SunEvent(sunCalculation.NextRise, false); // Rise and set are at the same time ... lets just call it a sunset.
+						}
 
 						// Now we know when the next event is and what type it is, so we know what profile the cameras should be now.
-						if (nextEvent.rise)
+						if (nextEvent.Rise)
 						{
 							// Next event is a sunrise, which means it is currently Night.
-							TriggerSunActions(nextEvent.time, Profile.Night);
+							TriggerSunActions(nextEvent.Time, Profile.Night);
 						}
 						else
 						{
 							// Next event is a sunset, which means it is currently Day.
-							TriggerSunActions(nextEvent.time, Profile.Day);
+							TriggerSunActions(nextEvent.Time, Profile.Day);
 						}
 
-						while (DateTime.Now <= nextEvent.time)
+						while (DateTime.Now <= nextEvent.Time)
+						{
 							Thread.Sleep(1000);
+						}
 					}
 					catch (ThreadAbortException) { throw; }
 					catch (Exception ex)
@@ -99,22 +109,25 @@ namespace SunriseSunset
 
 		public static void TriggerSunActions(DateTime nextEventTime, Profile profile)
 		{
-			Logger.Info("TriggerSunriseActions");
-			lock (syncLockCameraControl)
-			{
-				SunriseSunsetConfig cfg = new SunriseSunsetConfig();
-				cfg.Load();
-				ParallelOptions opt = new ParallelOptions();
-				opt.MaxDegreeOfParallelism = NumberUtil.Clamp(cfg.Cameras.Count, 1, 8);
+			Logger.Info("TriggerSunActions");
 
-				Parallel.ForEach(cfg.Cameras, opt, (cam) =>
+			lock (SyncLockCameraControl)
+			{
+				SunriseSunsetConfig sunConfig = new SunriseSunsetConfig();
+				sunConfig.Load();
+
+				ParallelOptions parallelOptions = new ParallelOptions();
+
+				parallelOptions.MaxDegreeOfParallelism = NumberUtil.Clamp(sunConfig.Cameras.Count, 1, 8);
+
+				Parallel.ForEach(sunConfig.Cameras, parallelOptions, (camera) =>
 				{
 					try
 					{
-						WebClient wc = new WebClient();
-						wc.Credentials = cam.GetCredentials();
-						WebRequestRobust(nextEventTime, wc, cam.GetNightDayUrl(profile), cam.GetNightDayBody(profile));
-						HandleZoomAndFocus(nextEventTime, wc, cam, cam.dayZoom, cam.dayFocus);
+						WebClient webClient = new WebClient();
+						webClient.Credentials = camera.GetCredentials();
+						WebRequestRobust(nextEventTime, webClient, camera.GetNightDayUri(profile), camera.GetNightDayBody(profile));
+						HandleZoomAndFocus(nextEventTime, webClient, camera, camera.DayZoom, camera.DayFocus);
 					}
 					catch (ThreadAbortException) { throw; }
 					catch (Exception ex)
@@ -127,14 +140,14 @@ namespace SunriseSunset
 
 		private static void HandleZoomAndFocus(DateTime nextEventTime, WebClient wc, CameraDefinition cam, string zoom, string focus)
 		{
-			double dbl;
-			bool SetZoom = !string.IsNullOrWhiteSpace(zoom) && double.TryParse(zoom, out dbl);
-			bool FocusIsEmpty = string.IsNullOrWhiteSpace(focus);
-			bool ManualFocus = FocusIsEmpty ? false : double.TryParse(focus, out dbl);
+			bool setZoom = !string.IsNullOrWhiteSpace(zoom) && double.TryParse(zoom, out var zoomOutput);
+			bool focusIsEmpty = string.IsNullOrWhiteSpace(focus);
+			bool manualFocus = focusIsEmpty ? false : double.TryParse(focus, out var focusOutput);
+
 			// There are 4 cases
-			if (SetZoom)
+			if (setZoom)
 			{
-				if (ManualFocus)
+				if (manualFocus)
 				{
 					// Case 1: Manual Zoom, Manual Focus
 					Thread.Sleep(3000);
@@ -144,8 +157,8 @@ namespace SunriseSunset
 					// The third or fourth usually causes our manual focus level to be set.
 					for (int i = 0; i < 5; i++)
 					{
-						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUrl(zoom, focus), null);
-						Thread.Sleep(Math.Max(1, cam.secondsBetweenLensCommands) * 1000);
+						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUri(zoom, focus), null);
+						Thread.Sleep(Math.Max(1, cam.SecondsBetweenLensCommands) * 1000);
 					}
 				}
 				else
@@ -159,16 +172,17 @@ namespace SunriseSunset
 					// The third or fourth usually causes our manual focus level to be set.
 					for (int i = 0; i < 4; i++)
 					{
-						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUrl(zoom, focus), null);
-						Thread.Sleep(Math.Max(1, cam.secondsBetweenLensCommands) * 1000);
+						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUri(zoom, focus), null);
+						Thread.Sleep(Math.Max(1, cam.SecondsBetweenLensCommands) * 1000);
 					}
+
 					// This method has been, in my experience, reliable enough to call only once.
-					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUrl(), null);
+					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUri(), null);
 				}
 			}
 			else
 			{
-				if (FocusIsEmpty || ManualFocus)
+				if (focusIsEmpty || manualFocus)
 				{
 					// Case 4: Don't zoom and don't focus.  Do nothing.
 				}
@@ -176,32 +190,34 @@ namespace SunriseSunset
 				{
 					// Case 3: Autofocus Only
 					// This method has been, in my experience, reliable enough to call only once.
-					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUrl(), null);
+					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUri(), null);
 				}
 			}
 		}
 
-		private static void WebRequestRobust(DateTime nextEventTime, WebClient wc, string url, string body)
+		private static void WebRequestRobust(DateTime nextEventTime, WebClient webClient, Uri uri, string body)
 		{
 			WaitProgressivelyLonger wpl = new WaitProgressivelyLonger(600000, 5000, 15000);
+
+			var requestAttempts = 0;
 
 			while (true)
 			{
 				if (DateTime.Now >= nextEventTime)
 				{
-					Logger.Info("Cancelled web request (" + url + ") due to the next event time being reached.");
+					Logger.Info("Cancelled web request (" + uri + ") due to the next event time being reached.");
 					return;
 				}
 
 				try
 				{
-					if(string.IsNullOrEmpty(body))
+					if (string.IsNullOrEmpty(body))
 					{
-						wc.DownloadString(url);
+						webClient.DownloadStringAsync(uri);
 					}
 					else
 					{
-						wc.UploadString(url, "Put", body);
+						webClient.UploadStringAsync(uri, "Put", body);
 					}
 
 					return;
@@ -209,7 +225,16 @@ namespace SunriseSunset
 				catch (ThreadAbortException) { throw; }
 				catch (Exception ex)
 				{
-					Logger.Info("Exception thrown attempting web request (" + url + "): " + ex.Message);
+					Logger.Info("Exception thrown attempting web request (" + uri + "): " + ex.Message);
+
+					if(requestAttempts > 5)
+					{
+						Logger.Info("Attempted to make a request 5 times, aborting");
+						return;
+					}
+
+					requestAttempts++;
+					wpl.Wait();
 				}
 			}
 		}
@@ -217,13 +242,13 @@ namespace SunriseSunset
 
 	class SunEvent
 	{
-		public DateTime time;
-		public bool rise = false;
+		public DateTime Time;
+		public bool Rise = false;
 
 		public SunEvent(DateTime time, bool rise)
 		{
-			this.time = time;
-			this.rise = rise;
+			Time = time;
+			Rise = rise;
 		}
 	}
 }

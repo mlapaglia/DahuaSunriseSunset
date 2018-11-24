@@ -1,4 +1,6 @@
-﻿namespace SunriseSunset
+﻿using System;
+
+namespace SunriseSunset
 {
 	public class DahuaCameraDefinition : CameraDefinition
 	{
@@ -12,29 +14,24 @@
 
 		public DahuaCameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
 		{
-			this.dayZoom = dayZoom;
-			this.dayFocus = dayFocus;
-			this.nightZoom = nightZoom;
-			this.nightFocus = nightFocus;
-			this.secondsBetweenLensCommands = lensDelay;
-			this.sunriseProfile = sunriseProfile;
-			this.sunsetProfile = sunsetProfile;
-			this.manufacturer = CameraManufacturer.Dahua;
+			DayZoom = dayZoom;
+			DayFocus = dayFocus;
+			NightZoom = nightZoom;
+			NightFocus = nightFocus;
+			SecondsBetweenLensCommands = lensDelay;
+			SunriseProfile = sunriseProfile;
+			SunsetProfile = sunsetProfile;
+			Manufacturer = CameraManufacturer.Dahua;
 		}
 
-		public override string ToString()
+		public override Uri GetBaseUri()
 		{
-			return "http" + (https ? "s" : "") + "://" + user + ":" + pass + "@" + hostAndPort + "/";
+			return new Uri("http" + (UseHttps ? "s" : "") + "://" + HostAndPort);
 		}
 
-		public override string GetBaseUrl()
+		public override Uri GetNightDayUri(Profile profile)
 		{
-			return "http" + (https ? "s" : "") + "://" + hostAndPort;
-		}
-
-		public override string GetNightDayUrl(Profile profile)
-		{
-			return GetBaseUrl() + "/cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)profile;
+			return new Uri(GetBaseUri() + "/cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)profile);
 		}
 
 		public override string GetNightDayBody(Profile profile)
@@ -42,14 +39,14 @@
 			return string.Empty;
 		}
 
-		public override string GetZoomAndFocusUrl(string zoom, string focus)
+		public override Uri GetZoomAndFocusUri(string zoom, string focus)
 		{
-			return GetBaseUrl() + "/cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom;
+			return new Uri(GetBaseUri() + "/cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom);
 		}
 
-		public override string GetAutoFocusUrl()
+		public override Uri GetAutoFocusUri()
 		{
-			return GetBaseUrl() + "/cgi-bin/devVideoInput.cgi?action=autoFocus";
+			return new Uri(GetBaseUri() + "/cgi-bin/devVideoInput.cgi?action=autoFocus");
 		}
 	}
 }

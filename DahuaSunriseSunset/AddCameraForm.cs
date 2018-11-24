@@ -14,27 +14,27 @@ namespace SunriseSunset
 
 			newCamera = new DahuaCameraDefinition();
 
-			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.manufacturer);
-			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.sunriseProfile);
-			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.sunsetProfile);
+			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.Manufacturer);
+			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.SunriseProfile);
+			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.SunsetProfile);
 		}
 
 		public void ConvertIntoEditForm(CameraDefinition existingCameraData)
 		{
 			newCamera = existingCameraData;
-			txtHostAndPort.Text = newCamera.hostAndPort;
-			txtUser.Text = newCamera.user;
-			txtPass.Text = newCamera.pass;
-			cbHttps.Checked = newCamera.https;
-			txtDayZoom.Text = newCamera.dayZoom;
-			txtDayFocus.Text = newCamera.dayFocus;
-			txtNightZoom.Text = newCamera.nightZoom;
-			txtNightFocus.Text = newCamera.nightFocus;
-			nudLensCmdDelay.Value = newCamera.secondsBetweenLensCommands;
+			txtHostAndPort.Text = newCamera.HostAndPort;
+			txtUser.Text = newCamera.Username;
+			txtPass.Text = newCamera.Password;
+			cbHttps.Checked = newCamera.UseHttps;
+			txtDayZoom.Text = newCamera.DayZoom;
+			txtDayFocus.Text = newCamera.DayFocus;
+			txtNightZoom.Text = newCamera.NightZoom;
+			txtNightFocus.Text = newCamera.NightFocus;
+			nudLensCmdDelay.Value = newCamera.SecondsBetweenLensCommands;
 
-			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.manufacturer);
-			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.sunriseProfile);
-			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.sunsetProfile);
+			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.Manufacturer);
+			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.SunriseProfile);
+			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.SunsetProfile);
 
 			this.Text = "Edit Camera";
 		}

@@ -1,21 +1,22 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace SunriseSunset
 {
 	public abstract class CameraDefinition
 	{
-		public string hostAndPort;
-		public string user;
-		public string pass;
-		public bool https;
-		public string dayZoom = "";
-		public string dayFocus = "";
-		public string nightZoom = "";
-		public string nightFocus = "";
-		public int secondsBetweenLensCommands = 4;
-		public Profile sunriseProfile = Profile.Day;
-		public Profile sunsetProfile = Profile.Night;
-		public CameraManufacturer manufacturer;
+		public string HostAndPort;
+		public string Username;
+		public string Password;
+		public bool UseHttps;
+		public string DayZoom = "";
+		public string DayFocus = "";
+		public string NightZoom = "";
+		public string NightFocus = "";
+		public int SecondsBetweenLensCommands = 4;
+		public Profile SunriseProfile = Profile.Day;
+		public Profile SunsetProfile = Profile.Night;
+		public CameraManufacturer Manufacturer;
 
 		public CameraDefinition()
 		{
@@ -23,44 +24,42 @@ namespace SunriseSunset
 
 		public CameraDefinition(string hostAndPort, string user, string pass, bool https)
 		{
-			this.hostAndPort = hostAndPort;
-			this.user = user;
-			this.pass = pass;
-			this.https = https;
+			this.HostAndPort = hostAndPort;
+			this.Username = user;
+			this.Password = pass;
+			this.UseHttps = https;
 		}
 
 		public CameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
 		{
-			this.dayZoom = dayZoom;
-			this.dayFocus = dayFocus;
-			this.nightZoom = nightZoom;
-			this.nightFocus = nightFocus;
-			this.secondsBetweenLensCommands = lensDelay;
-			this.sunriseProfile = sunriseProfile;
-			this.sunsetProfile = sunsetProfile;
-		}
-
-		public override string ToString()
-		{
-			return "http" + (https ? "s" : "") + "://" + user + ":" + pass + "@" + hostAndPort + "/";
+			DayZoom = dayZoom;
+			DayFocus = dayFocus;
+			NightZoom = nightZoom;
+			NightFocus = nightFocus;
+			SecondsBetweenLensCommands = lensDelay;
+			SunriseProfile = sunriseProfile;
+			SunsetProfile = sunsetProfile;
 		}
 
 		public ICredentials GetCredentials()
 		{
-			if (!string.IsNullOrEmpty(user))
-				return new NetworkCredential(user, pass);
+			if (!string.IsNullOrEmpty(Username))
+			{
+				return new NetworkCredential(Username, Password);
+			}
+
 			return null;
 		}
 
-		public abstract string GetBaseUrl();
+		public abstract Uri GetBaseUri();
 
-		public abstract string GetNightDayUrl(Profile profile);
+		public abstract Uri GetNightDayUri(Profile profile);
 
 		public abstract string GetNightDayBody(Profile profile);
 
-		public abstract string GetZoomAndFocusUrl(string zoom, string focus);
+		public abstract Uri GetZoomAndFocusUri(string zoom, string focus);
 
-		public abstract string GetAutoFocusUrl();
+		public abstract Uri GetAutoFocusUri();
 	}
 
 	public enum Profile

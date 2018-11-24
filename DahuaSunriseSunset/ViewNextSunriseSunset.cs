@@ -22,22 +22,22 @@ namespace SunriseSunset
 			SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 			cfg.Load();
 
-			DateTime rise, set;
 			TimeSpan utcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
-			bool timeZoneAndLongitudeAreCompatible;
-			SunHelper.Calc(cfg.latitude, cfg.longitude, out rise, out set, out timeZoneAndLongitudeAreCompatible);
-			label1.Text = "Lat " + cfg.latitude + Environment.NewLine
-				+ "Lon " + cfg.longitude + Environment.NewLine
+
+			SunHelper.SunHelperCalculation sunCalculation = SunHelper.CalculateDailySunEvents(cfg.Latitude, cfg.Longitude);
+
+			label1.Text = "Lat " + cfg.Latitude + Environment.NewLine
+				+ "Lon " + cfg.Longitude + Environment.NewLine
 				+ "UTC Offset: " + utcOffset.TotalSeconds + " seconds (" + utcOffset.TotalHours + " hours)" + Environment.NewLine
 				+ Environment.NewLine
-				+ (timeZoneAndLongitudeAreCompatible ? "" : "Your machine's time zone needs to be on the same side " + Environment.NewLine
+				+ (sunCalculation.TimeZoneAndLongitudeAreCompatible ? "" : "Your machine's time zone needs to be on the same side " + Environment.NewLine
 														  + "of the prime meridian as the longitude you have entered." + Environment.NewLine + Environment.NewLine)
-				+ (rise > set ?
-				("Sunset at " + set + Environment.NewLine
-				+ "Sunrise at " + rise)
+				+ (sunCalculation.NextRise > sunCalculation.NextSet ?
+				("Sunset at " + sunCalculation.NextSet + Environment.NewLine
+				+ "Sunrise at " + sunCalculation.NextRise)
 				:
-				("Sunrise at " + rise + Environment.NewLine
-				+ "Sunset at " + set));
+				("Sunrise at " + sunCalculation.NextRise + Environment.NewLine
+				+ "Sunset at " + sunCalculation.NextSet));
 		}
 	}
 }

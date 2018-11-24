@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace SunriseSunset
 {
@@ -10,37 +11,32 @@ namespace SunriseSunset
 
 		public HikvisionCameraDefinition(string hostAndPort, string user, string pass, bool https) : base(hostAndPort, user, pass, https)
 		{
-			this.hostAndPort = hostAndPort;
-			this.user = user;
-			this.pass = pass;
-			this.https = https;
+			HostAndPort = hostAndPort;
+			Username = user;
+			Password = pass;
+			UseHttps = https;
 		}
 
 		public HikvisionCameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
 		{
-			this.dayZoom = dayZoom;
-			this.dayFocus = dayFocus;
-			this.nightZoom = nightZoom;
-			this.nightFocus = nightFocus;
-			this.secondsBetweenLensCommands = lensDelay;
-			this.sunriseProfile = sunriseProfile;
-			this.sunsetProfile = sunsetProfile;
-			this.manufacturer = CameraManufacturer.Hikvision;
+			DayZoom = dayZoom;
+			DayFocus = dayFocus;
+			NightZoom = nightZoom;
+			NightFocus = nightFocus;
+			SecondsBetweenLensCommands = lensDelay;
+			SunriseProfile = sunriseProfile;
+			SunsetProfile = sunsetProfile;
+			Manufacturer = CameraManufacturer.Hikvision;
 		}
 
-		public override string ToString()
+		public override Uri GetBaseUri()
 		{
-			return "http" + (https ? "s" : "") + "://" + user + ":" + pass + "@" + hostAndPort + "/";
+			return new Uri("http" + (UseHttps ? "s" : "") + "://" + HostAndPort + "/ISAPI/Image/channels/1");
 		}
 
-		public override string GetBaseUrl()
+		public override Uri GetNightDayUri(Profile profile)
 		{
-			return "http" + (https ? "s" : "") + "://" + hostAndPort + "/ISAPI/Image/channels/1";
-		}
-
-		public override string GetNightDayUrl(Profile profile)
-		{
-			return "http" + (https ? "s" : "") + "://" + hostAndPort + "/ISAPI/Image/channels/1";
+			return new Uri("http" + (UseHttps ? "s" : "") + "://" + HostAndPort + "/ISAPI/Image/channels/1");
 		}
 
 		public override string GetNightDayBody(Profile profile)
@@ -49,14 +45,14 @@ namespace SunriseSunset
 			return "<ImageChannel version=\"2.0\" xmlns=\"http://www.hikvision.com/ver20/XMLSchema\"><IrcutFilter version=\"2.0\" xmlns=\"http://www.hikvision.com/ver20/XMLSchema\"><IrcutFilterType>" + nightOrDay + "</IrcutFilterType></IrcutFilter></ImageChannel>";
 		}
 
-		public override string GetAutoFocusUrl()
+		public override Uri GetAutoFocusUri()
 		{
-			return GetBaseUrl();
+			return GetBaseUri();
 		}
 
-		public override string GetZoomAndFocusUrl(string zoom, string focus)
+		public override Uri GetZoomAndFocusUri(string zoom, string focus)
 		{
-			return GetBaseUrl();
+			return GetBaseUri();
 		}
 	}
 }

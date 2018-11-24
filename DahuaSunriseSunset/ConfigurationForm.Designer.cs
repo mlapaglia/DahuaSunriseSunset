@@ -100,9 +100,9 @@
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(12, 173);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(83, 13);
+			this.label3.Size = new System.Drawing.Size(48, 13);
 			this.label3.TabIndex = 5;
-			this.label3.Text = "Dahua Cameras";
+			this.label3.Text = "Cameras";
 			this.toolTip1.SetToolTip(this.label3, "These cameras will have their profiles changed to Day at sunrise and changed to N" +
         "ight at sunset.");
 			// 

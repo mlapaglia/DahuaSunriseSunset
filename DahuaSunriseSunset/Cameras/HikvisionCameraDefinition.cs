@@ -36,7 +36,7 @@ namespace SunriseSunset
 
 		public override Uri GetNightDayUri(Profile profile)
 		{
-			return new Uri("http" + (UseHttps ? "s" : "") + "://" + HostAndPort + "/ISAPI/Image/channels/1");
+			return GetBaseUri();
 		}
 
 		public override string GetNightDayBody(Profile profile)

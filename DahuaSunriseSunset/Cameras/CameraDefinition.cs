@@ -24,10 +24,10 @@ namespace SunriseSunset
 
 		public CameraDefinition(string hostAndPort, string user, string pass, bool https)
 		{
-			this.HostAndPort = hostAndPort;
-			this.Username = user;
-			this.Password = pass;
-			this.UseHttps = https;
+			HostAndPort = hostAndPort;
+			Username = user;
+			Password = pass;
+			UseHttps = https;
 		}
 
 		public CameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
@@ -49,6 +49,11 @@ namespace SunriseSunset
 			}
 
 			return null;
+		}
+
+		public override string ToString()
+		{
+			return "http" + (UseHttps ? "s" : "") + "://" + Username + ":" + Password + "@" + HostAndPort + "/";
 		}
 
 		public abstract Uri GetBaseUri();

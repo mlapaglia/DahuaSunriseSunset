@@ -31,7 +31,7 @@ namespace SunriseSunset
 
 		public override Uri GetNightDayUri(Profile profile)
 		{
-			return new Uri(GetBaseUri() + "/cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)profile);
+			return new Uri(GetBaseUri() + "cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)profile);
 		}
 
 		public override string GetNightDayBody(Profile profile)
@@ -41,12 +41,12 @@ namespace SunriseSunset
 
 		public override Uri GetZoomAndFocusUri(string zoom, string focus)
 		{
-			return new Uri(GetBaseUri() + "/cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom);
+			return new Uri(GetBaseUri() + "cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom);
 		}
 
 		public override Uri GetAutoFocusUri()
 		{
-			return new Uri(GetBaseUri() + "/cgi-bin/devVideoInput.cgi?action=autoFocus");
+			return new Uri(GetBaseUri() + "cgi-bin/devVideoInput.cgi?action=autoFocus");
 		}
 	}
 }

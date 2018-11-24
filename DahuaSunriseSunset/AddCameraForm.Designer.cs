@@ -72,8 +72,6 @@
 			// 
 			// txtHostAndPort
 			// 
-			this.txtHostAndPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtHostAndPort.Location = new System.Drawing.Point(15, 73);
 			this.txtHostAndPort.Name = "txtHostAndPort";
 			this.txtHostAndPort.Size = new System.Drawing.Size(248, 20);
@@ -94,8 +92,6 @@
 			// 
 			// txtUser
 			// 
-			this.txtUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtUser.Location = new System.Drawing.Point(15, 112);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(248, 20);
@@ -112,8 +108,6 @@
 			// 
 			// txtPass
 			// 
-			this.txtPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPass.Location = new System.Drawing.Point(15, 151);
 			this.txtPass.Name = "txtPass";
 			this.txtPass.Size = new System.Drawing.Size(248, 20);
@@ -326,7 +320,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(580, 299);
+			this.ClientSize = new System.Drawing.Size(576, 295);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.cbCameraManufacturer);
 			this.Controls.Add(this.label10);
@@ -354,6 +348,8 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.txtHostAndPort);
 			this.Controls.Add(this.label1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
 			this.Name = "AddCameraForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Add Camera";

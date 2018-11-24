@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 using BPUtil;
 
 namespace SunriseSunset
 {
+	[XmlInclude(typeof(DahuaCameraDefinition))]
+	[XmlInclude(typeof(HikvisionCameraDefinition))]
 	public class SunriseSunsetConfig : SerializableObjectBase
 	{
 		public double latitude = 0;

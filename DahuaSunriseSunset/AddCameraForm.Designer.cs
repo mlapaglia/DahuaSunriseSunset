@@ -56,6 +56,7 @@
 			this.cbSunriseProfile = new System.Windows.Forms.ComboBox();
 			this.cbSunsetProfile = new System.Windows.Forms.ComboBox();
 			this.cbCameraManufacturer = new System.Windows.Forms.ComboBox();
+			this.btnSave = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.nudLensCmdDelay)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -311,11 +312,22 @@
 			this.cbCameraManufacturer.Size = new System.Drawing.Size(248, 21);
 			this.cbCameraManufacturer.TabIndex = 28;
 			// 
+			// btnSave
+			// 
+			this.btnSave.Location = new System.Drawing.Point(281, 264);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(287, 23);
+			this.btnSave.TabIndex = 29;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
 			// AddCameraForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(580, 271);
+			this.ClientSize = new System.Drawing.Size(580, 299);
+			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.cbCameraManufacturer);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.cbSunsetProfile);
@@ -381,5 +393,6 @@
 		private System.Windows.Forms.ComboBox cbSunsetProfile;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox cbCameraManufacturer;
+		private System.Windows.Forms.Button btnSave;
 	}
 }

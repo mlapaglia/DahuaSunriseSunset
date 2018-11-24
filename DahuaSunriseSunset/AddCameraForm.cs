@@ -63,11 +63,6 @@ namespace SunriseSunset
 			return defaultValue;
 		}
 
-		private void btnAdd_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
-
 		private void btnGetCurrent_Click(object sender, EventArgs e)
 		{
 			WebClient wc = new WebClient();
@@ -107,6 +102,11 @@ namespace SunriseSunset
 		private void lblLensCmdQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			lblLensCmd_Click(sender, e);
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

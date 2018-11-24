@@ -15,6 +15,7 @@ namespace SunriseSunset
 		public int secondsBetweenLensCommands = 4;
 		public Profile sunriseProfile = Profile.Day;
 		public Profile sunsetProfile = Profile.Night;
+		public CameraManufacturer manufacturer;
 
 		public CameraDefinition()
 		{
@@ -54,6 +55,12 @@ namespace SunriseSunset
 		public abstract string GetBaseUrl();
 
 		public abstract string GetNightDayUrl(Profile profile);
+
+		public abstract string GetNightDayBody(Profile profile);
+
+		public abstract string GetZoomAndFocusUrl(string zoom, string focus);
+
+		public abstract string GetAutoFocusUrl();
 	}
 
 	public enum Profile
@@ -61,5 +68,11 @@ namespace SunriseSunset
 		Day = 0,
 		Night = 1,
 		Normal = 2
+	}
+
+	public enum CameraManufacturer
+	{
+		Dahua = 0,
+		Hikvision = 1
 	}
 }

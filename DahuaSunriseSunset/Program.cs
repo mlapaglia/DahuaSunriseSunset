@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using BPUtil;
 using BPUtil.Forms;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	static class Program
 	{
@@ -32,9 +32,9 @@ namespace DahuaSunriseSunset
 
 			if (Environment.UserInteractive)
 			{
-				string Title = "DahuaSunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service Manager";
+				string Title = "SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service Manager";
 				Logger.Info(Title + " Startup");
-				string ServiceName = "DahuaSunriseSunset";
+				string ServiceName = "SunriseSunset";
 				ButtonDefinition btnConfigure = new ButtonDefinition("Configure Service", btnConfigure_Click);
 				ButtonDefinition btnSimulateSunrise = new ButtonDefinition("Simulate Sunrise", btnSimulateSunrise_Click);
 				ButtonDefinition btnViewNextTimes = new ButtonDefinition("View rise/set", btnViewNextTimes_Click);
@@ -48,7 +48,7 @@ namespace DahuaSunriseSunset
 				ServiceBase[] ServicesToRun;
 				ServicesToRun = new ServiceBase[]
 				{
-				new DahuaSunriseSunsetService()
+				new SunriseSunsetService()
 				};
 				ServiceBase.Run(ServicesToRun);
 			}
@@ -87,11 +87,11 @@ namespace DahuaSunriseSunset
 		}
 		private static void btnSimulateSunrise_Click(object sender, EventArgs e)
 		{
-			ServiceWrapper.TriggerSunriseActions(DateTime.Now.AddMinutes(5));
+			ServiceWrapper.TriggerSunActions(DateTime.Now.AddMinutes(5), Profile.Day);
 		}
 		private static void btnSimulateSunset_Click(object sender, EventArgs e)
 		{
-			ServiceWrapper.TriggerSunsetActions(DateTime.Now.AddMinutes(5));
+			ServiceWrapper.TriggerSunActions(DateTime.Now.AddMinutes(5), Profile.Night);
 		}
 	}
 }

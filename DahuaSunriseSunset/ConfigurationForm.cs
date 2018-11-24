@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public partial class ConfigurationForm : Form
 	{
@@ -44,7 +44,7 @@ namespace DahuaSunriseSunset
 
 		private void ConfigurationForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
+			SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 			cfg.Load();
 
 			try
@@ -53,7 +53,7 @@ namespace DahuaSunriseSunset
 				cfg.longitude = double.Parse(txtLon.Text);
 				cfg.sunriseOffsetHours = double.Parse(txtRiseOffset.Text);
 				cfg.sunsetOffsetHours = double.Parse(txtSetOffset.Text);
-				cfg.DahuaCameras = BuildCameraList();
+				cfg.Cameras = BuildCameraList();
 
 				cfg.Save();
 			}
@@ -74,7 +74,7 @@ namespace DahuaSunriseSunset
 
 		private void ConfigurationForm_Load(object sender, EventArgs e)
 		{
-			DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
+			SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 			cfg.Load();
 			cfg.SaveIfNoExist();
 
@@ -83,7 +83,7 @@ namespace DahuaSunriseSunset
 			txtRiseOffset.Text = cfg.sunriseOffsetHours.ToString();
 			txtSetOffset.Text = cfg.sunsetOffsetHours.ToString();
 
-			foreach (CameraDefinition cam in cfg.DahuaCameras)
+			foreach (CameraDefinition cam in cfg.Cameras)
 				lbCameras.Items.Add(cam);
 		}
 

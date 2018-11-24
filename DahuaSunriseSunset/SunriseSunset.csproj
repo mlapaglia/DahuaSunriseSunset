@@ -64,20 +64,22 @@
       <DependentUpon>AddCameraForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CalcSunTimes.cs" />
-    <Compile Include="CameraDefinition.cs" />
     <Compile Include="CameraHelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CameraHelpForm.Designer.cs">
       <DependentUpon>CameraHelpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cameras\HikvisionCameraDefinition.cs" />
+    <Compile Include="Cameras\DahuaCameraDefinition.cs" />
+    <Compile Include="Cameras\CameraDefinition.cs" />
     <Compile Include="ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DahuaSunriseSunsetConfig.cs" />
+    <Compile Include="SunriseSunsetConfig.cs" />
     <Compile Include="DahuaSunriseSunsetService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -104,12 +106,6 @@
   <ItemGroup>
     <None Include="app.manifest" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BPUtil\BPUtil\BPUtil.csproj">
-      <Project>{a4981d8d-debf-4b34-b9ce-ff25520a02b7}</Project>
-      <Name>BPUtil</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AddCameraForm.resx">

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public partial class CameraHelpForm : Form
 	{

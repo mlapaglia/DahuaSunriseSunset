@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CoordinateSharp;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public static class SunHelper
 	{
@@ -37,28 +37,6 @@ namespace DahuaSunriseSunset
 				if (nextRise != DateTime.MinValue && nextSet != DateTime.MinValue)
 					return;
 			}
-			//timeZoneAndLongitudeAreCompatible = true;
-
-			//DateTime now = DateTime.Now;
-			//nextRise = DateTime.MinValue;
-			//nextSet = DateTime.MinValue;
-
-			//DateTime rise = DateTime.MinValue, set = DateTime.MinValue;
-			//bool doesRise = false, doesSet = false;
-
-			//for (int offsetDays = 0; offsetDays < 366; offsetDays++)
-			//{
-			//	DateTime calcDay = now.AddDays(offsetDays);
-			//	timeZoneAndLongitudeAreCompatible = SunTimes.Instance.CalculateSunRiseSetTimes(lat, lon, calcDay, ref rise, ref set, ref doesRise, ref doesSet);
-			//	if (!timeZoneAndLongitudeAreCompatible)
-			//		return;
-			//	if (nextRise == DateTime.MinValue && rise.AddHours(sunriseOffsetHours) > now)
-			//		nextRise = rise.AddHours(sunriseOffsetHours);
-			//	if (nextSet == DateTime.MinValue && set.AddHours(sunsetOffsetHours) > now)
-			//		nextSet = set.AddHours(sunsetOffsetHours);
-			//	if (nextRise != DateTime.MinValue && nextSet != DateTime.MinValue)
-			//		return;
-			//}
 		}
 	}
 }

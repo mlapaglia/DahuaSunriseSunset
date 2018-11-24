@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public partial class ViewNextSunriseSunset : Form
 	{
@@ -19,7 +19,7 @@ namespace DahuaSunriseSunset
 
 		private void ViewNextSunriseSunset_Load(object sender, EventArgs e)
 		{
-			DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
+			SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 			cfg.Load();
 
 			DateTime rise, set;

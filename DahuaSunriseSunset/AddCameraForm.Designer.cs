@@ -1,4 +1,4 @@
-﻿namespace DahuaSunriseSunset
+﻿namespace SunriseSunset
 {
 	partial class AddCameraForm
 	{
@@ -32,6 +32,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtHostAndPort = new System.Windows.Forms.TextBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.label10 = new System.Windows.Forms.Label();
 			this.txtUser = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtPass = new System.Windows.Forms.TextBox();
@@ -54,13 +55,14 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this.cbSunriseProfile = new System.Windows.Forms.ComboBox();
 			this.cbSunsetProfile = new System.Windows.Forms.ComboBox();
+			this.cbCameraManufacturer = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.nudLensCmdDelay)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Location = new System.Drawing.Point(12, 57);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(138, 13);
 			this.label1.TabIndex = 0;
@@ -71,18 +73,29 @@
 			// 
 			this.txtHostAndPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtHostAndPort.Location = new System.Drawing.Point(15, 25);
+			this.txtHostAndPort.Location = new System.Drawing.Point(15, 73);
 			this.txtHostAndPort.Name = "txtHostAndPort";
 			this.txtHostAndPort.Size = new System.Drawing.Size(248, 20);
 			this.txtHostAndPort.TabIndex = 1;
 			this.txtHostAndPort.Text = "127.0.0.1:8080";
 			this.toolTip1.SetToolTip(this.txtHostAndPort, "e.g. \"127.0.0.1:8080\"");
 			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(12, 9);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(109, 13);
+			this.label10.TabIndex = 27;
+			this.label10.Text = "Camera Manufacturer";
+			this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.toolTip1.SetToolTip(this.label10, "e.g. \"127.0.0.1:8080\"");
+			// 
 			// txtUser
 			// 
 			this.txtUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtUser.Location = new System.Drawing.Point(15, 64);
+			this.txtUser.Location = new System.Drawing.Point(15, 112);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(248, 20);
 			this.txtUser.TabIndex = 3;
@@ -90,7 +103,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 48);
+			this.label2.Location = new System.Drawing.Point(12, 96);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(60, 13);
 			this.label2.TabIndex = 2;
@@ -100,7 +113,7 @@
 			// 
 			this.txtPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPass.Location = new System.Drawing.Point(15, 103);
+			this.txtPass.Location = new System.Drawing.Point(15, 151);
 			this.txtPass.Name = "txtPass";
 			this.txtPass.Size = new System.Drawing.Size(248, 20);
 			this.txtPass.TabIndex = 5;
@@ -108,7 +121,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(12, 87);
+			this.label3.Location = new System.Drawing.Point(12, 135);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(53, 13);
 			this.label3.TabIndex = 4;
@@ -117,7 +130,7 @@
 			// cbHttps
 			// 
 			this.cbHttps.AutoSize = true;
-			this.cbHttps.Location = new System.Drawing.Point(15, 129);
+			this.cbHttps.Location = new System.Drawing.Point(15, 177);
 			this.cbHttps.Name = "cbHttps";
 			this.cbHttps.Size = new System.Drawing.Size(146, 17);
 			this.cbHttps.TabIndex = 7;
@@ -257,7 +270,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(12, 158);
+			this.label8.Location = new System.Drawing.Point(12, 206);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(77, 13);
 			this.label8.TabIndex = 23;
@@ -266,7 +279,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(12, 191);
+			this.label9.Location = new System.Drawing.Point(12, 239);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(75, 13);
 			this.label9.TabIndex = 24;
@@ -276,7 +289,7 @@
 			// 
 			this.cbSunriseProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbSunriseProfile.FormattingEnabled = true;
-			this.cbSunriseProfile.Location = new System.Drawing.Point(109, 155);
+			this.cbSunriseProfile.Location = new System.Drawing.Point(109, 203);
 			this.cbSunriseProfile.Name = "cbSunriseProfile";
 			this.cbSunriseProfile.Size = new System.Drawing.Size(154, 21);
 			this.cbSunriseProfile.TabIndex = 8;
@@ -285,16 +298,26 @@
 			// 
 			this.cbSunsetProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbSunsetProfile.FormattingEnabled = true;
-			this.cbSunsetProfile.Location = new System.Drawing.Point(109, 188);
+			this.cbSunsetProfile.Location = new System.Drawing.Point(109, 236);
 			this.cbSunsetProfile.Name = "cbSunsetProfile";
 			this.cbSunsetProfile.Size = new System.Drawing.Size(154, 21);
 			this.cbSunsetProfile.TabIndex = 9;
+			// 
+			// cbCameraManufacturer
+			// 
+			this.cbCameraManufacturer.FormattingEnabled = true;
+			this.cbCameraManufacturer.Location = new System.Drawing.Point(15, 25);
+			this.cbCameraManufacturer.Name = "cbCameraManufacturer";
+			this.cbCameraManufacturer.Size = new System.Drawing.Size(248, 21);
+			this.cbCameraManufacturer.TabIndex = 28;
 			// 
 			// AddCameraForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(580, 271);
+			this.Controls.Add(this.cbCameraManufacturer);
+			this.Controls.Add(this.label10);
 			this.Controls.Add(this.cbSunsetProfile);
 			this.Controls.Add(this.cbSunriseProfile);
 			this.Controls.Add(this.label9);
@@ -356,5 +379,7 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ComboBox cbSunriseProfile;
 		private System.Windows.Forms.ComboBox cbSunsetProfile;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.ComboBox cbCameraManufacturer;
 	}
 }

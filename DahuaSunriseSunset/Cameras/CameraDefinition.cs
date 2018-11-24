@@ -1,9 +1,8 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
-	public class CameraDefinition
+	public abstract class CameraDefinition
 	{
 		public string hostAndPort;
 		public string user;
@@ -20,6 +19,7 @@ namespace DahuaSunriseSunset
 		public CameraDefinition()
 		{
 		}
+
 		public CameraDefinition(string hostAndPort, string user, string pass, bool https)
 		{
 			this.hostAndPort = hostAndPort;
@@ -51,11 +51,11 @@ namespace DahuaSunriseSunset
 			return null;
 		}
 
-		public string GetUrlBase()
-		{
-			return "http" + (https ? "s" : "") + "://" + hostAndPort + "/";
-		}
+		public abstract string GetBaseUrl();
+
+		public abstract string GetNightDayUrl(Profile profile);
 	}
+
 	public enum Profile
 	{
 		Day = 0,

@@ -3,8 +3,9 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using BPUtil;
+using SunriseSunset;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public static class ServiceWrapper
 	{
@@ -17,6 +18,7 @@ namespace DahuaSunriseSunset
 		{
 			ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 		}
+
 		public static void Start()
 		{
 			lock (syncLockStartStop)
@@ -28,6 +30,7 @@ namespace DahuaSunriseSunset
 				thrRunner.Start();
 			}
 		}
+
 		public static void Stop()
 		{
 			lock (syncLockStartStop)
@@ -36,6 +39,7 @@ namespace DahuaSunriseSunset
 				thrRunner = null;
 			}
 		}
+
 		private static void scheduler()
 		{
 			try
@@ -47,7 +51,7 @@ namespace DahuaSunriseSunset
 						// Calculate the next SunEvent
 						SunEvent nextEvent = null;
 
-						DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
+						SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 						cfg.Load();
 
 						DateTime rise, set;
@@ -70,13 +74,14 @@ namespace DahuaSunriseSunset
 						if (nextEvent.rise)
 						{
 							// Next event is a sunrise, which means it is currently Night.
-							TriggerSunsetActions(nextEvent.time);
+							TriggerSunActions(nextEvent.time, Profile.Night);
 						}
 						else
 						{
 							// Next event is a sunset, which means it is currently Day.
-							TriggerSunriseActions(nextEvent.time);
+							TriggerSunActions(nextEvent.time, Profile.Day);
 						}
+
 						while (DateTime.Now <= nextEvent.time)
 							Thread.Sleep(1000);
 					}
@@ -91,50 +96,25 @@ namespace DahuaSunriseSunset
 			catch (ThreadAbortException) { }
 			catch (Exception ex) { Logger.Debug(ex); }
 		}
-		public static void TriggerSunriseActions(DateTime nextEventTime)
+
+		public static void TriggerSunActions(DateTime nextEventTime, Profile profile)
 		{
 			Logger.Info("TriggerSunriseActions");
 			lock (syncLockCameraControl)
 			{
-				DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
+				SunriseSunsetConfig cfg = new SunriseSunsetConfig();
 				cfg.Load();
 				ParallelOptions opt = new ParallelOptions();
-				opt.MaxDegreeOfParallelism = NumberUtil.Clamp(cfg.DahuaCameras.Count, 1, 8);
-				Parallel.ForEach(cfg.DahuaCameras, opt, (cam) =>
-				{
-					try
-					{
-						WebClient wc = new WebClient();
-						wc.Credentials = cam.GetCredentials();
-						WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)cam.sunriseProfile);
-						HandleZoomAndFocus(nextEventTime, wc, cam, cam.dayZoom, cam.dayFocus);
-					}
-					catch (ThreadAbortException) { throw; }
-					catch (Exception ex)
-					{
-						Logger.Debug(ex);
-					}
-				});
-			}
-		}
+				opt.MaxDegreeOfParallelism = NumberUtil.Clamp(cfg.Cameras.Count, 1, 8);
 
-		public static void TriggerSunsetActions(DateTime nextEventTime)
-		{
-			Logger.Info("TriggerSunsetActions");
-			lock (syncLockCameraControl)
-			{
-				DahuaSunriseSunsetConfig cfg = new DahuaSunriseSunsetConfig();
-				cfg.Load();
-				ParallelOptions opt = new ParallelOptions();
-				opt.MaxDegreeOfParallelism = NumberUtil.Clamp(cfg.DahuaCameras.Count, 1, 8);
-				Parallel.ForEach(cfg.DahuaCameras, opt, (cam) =>
+				Parallel.ForEach(cfg.Cameras, opt, (cam) =>
 				{
 					try
 					{
 						WebClient wc = new WebClient();
 						wc.Credentials = cam.GetCredentials();
-						WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/configManager.cgi?action=setConfig&VideoInMode[0].Config[0]=" + (int)cam.sunsetProfile);
-						HandleZoomAndFocus(nextEventTime, wc, cam, cam.nightZoom, cam.nightFocus);
+						WebRequestRobust(nextEventTime, wc, cam.GetNightDayUrl(profile), cam.GetNightDayBody(profile));
+						HandleZoomAndFocus(nextEventTime, wc, cam, cam.dayZoom, cam.dayFocus);
 					}
 					catch (ThreadAbortException) { throw; }
 					catch (Exception ex)
@@ -164,7 +144,7 @@ namespace DahuaSunriseSunset
 					// The third or fourth usually causes our manual focus level to be set.
 					for (int i = 0; i < 5; i++)
 					{
-						WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom);
+						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUrl(zoom, focus), null);
 						Thread.Sleep(Math.Max(1, cam.secondsBetweenLensCommands) * 1000);
 					}
 				}
@@ -179,11 +159,11 @@ namespace DahuaSunriseSunset
 					// The third or fourth usually causes our manual focus level to be set.
 					for (int i = 0; i < 4; i++)
 					{
-						WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/devVideoInput.cgi?action=adjustFocus&focus=" + focus + "&zoom=" + zoom);
+						WebRequestRobust(nextEventTime, wc, cam.GetZoomAndFocusUrl(zoom, focus), null);
 						Thread.Sleep(Math.Max(1, cam.secondsBetweenLensCommands) * 1000);
 					}
 					// This method has been, in my experience, reliable enough to call only once.
-					WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/devVideoInput.cgi?action=autoFocus");
+					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUrl(), null);
 				}
 			}
 			else
@@ -196,37 +176,50 @@ namespace DahuaSunriseSunset
 				{
 					// Case 3: Autofocus Only
 					// This method has been, in my experience, reliable enough to call only once.
-					WebRequestRobust(nextEventTime, wc, cam.GetUrlBase() + "cgi-bin/devVideoInput.cgi?action=autoFocus");
+					WebRequestRobust(nextEventTime, wc, cam.GetAutoFocusUrl(), null);
 				}
 			}
 		}
-		private static void WebRequestRobust(DateTime nextEventTime, WebClient wc, string URL)
+
+		private static void WebRequestRobust(DateTime nextEventTime, WebClient wc, string url, string body)
 		{
 			WaitProgressivelyLonger wpl = new WaitProgressivelyLonger(600000, 5000, 15000);
+
 			while (true)
 			{
 				if (DateTime.Now >= nextEventTime)
 				{
-					Logger.Info("Cancelled web request (" + URL + ") due to the next event time being reached.");
+					Logger.Info("Cancelled web request (" + url + ") due to the next event time being reached.");
 					return;
 				}
+
 				try
 				{
-					wc.DownloadString(URL);
+					if(string.IsNullOrEmpty(body))
+					{
+						wc.DownloadString(url);
+					}
+					else
+					{
+						wc.UploadString(url, "Put", body);
+					}
+
 					return;
 				}
 				catch (ThreadAbortException) { throw; }
 				catch (Exception ex)
 				{
-					Logger.Info("Exception thrown attempting web request (" + URL + "): " + ex.Message);
+					Logger.Info("Exception thrown attempting web request (" + url + "): " + ex.Message);
 				}
 			}
 		}
 	}
+
 	class SunEvent
 	{
 		public DateTime time;
 		public bool rise = false;
+
 		public SunEvent(DateTime time, bool rise)
 		{
 			this.time = time;

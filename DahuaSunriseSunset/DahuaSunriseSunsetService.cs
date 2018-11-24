@@ -10,24 +10,24 @@ using System.Text;
 using System.Threading.Tasks;
 using BPUtil;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
-	public partial class DahuaSunriseSunsetService : ServiceBase
+	public partial class SunriseSunsetService : ServiceBase
 	{
-		public DahuaSunriseSunsetService()
+		public SunriseSunsetService()
 		{
 			InitializeComponent();
 		}
 
 		protected override void OnStart(string[] args)
 		{
-			Logger.Info("DahuaSunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStart");
+			Logger.Info("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStart");
 			ServiceWrapper.Start();
 		}
 
 		protected override void OnStop()
 		{
-			Logger.Info("DahuaSunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStop");
+			Logger.Info("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStop");
 			ServiceWrapper.Stop();
 		}
 	}

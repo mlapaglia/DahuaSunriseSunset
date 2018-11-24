@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DahuaSunriseSunset
+namespace SunriseSunset
 {
 	public partial class AddCameraForm : Form
 	{
@@ -18,6 +11,12 @@ namespace DahuaSunriseSunset
 		public AddCameraForm()
 		{
 			InitializeComponent();
+
+			newCamera = new DahuaCameraDefinition();
+
+			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.manufacturer);
+			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.sunriseProfile);
+			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.sunsetProfile);
 		}
 
 		public void ConvertIntoEditForm(CameraDefinition existingCameraData)
@@ -33,6 +32,7 @@ namespace DahuaSunriseSunset
 			txtNightFocus.Text = newCamera.nightFocus;
 			nudLensCmdDelay.Value = newCamera.secondsBetweenLensCommands;
 
+			SetCbItems(cbCameraManufacturer, Enum.GetNames(typeof(CameraManufacturer)), newCamera.manufacturer);
 			SetCbItems(cbSunriseProfile, Enum.GetNames(typeof(Profile)), newCamera.sunriseProfile);
 			SetCbItems(cbSunsetProfile, Enum.GetNames(typeof(Profile)), newCamera.sunsetProfile);
 
@@ -51,6 +51,7 @@ namespace DahuaSunriseSunset
 					break;
 				}
 		}
+
 		private Profile GetSelectedProfile(ComboBox comboBox, Profile defaultValue)
 		{
 			int idx = comboBox.SelectedIndex;
@@ -85,7 +86,15 @@ namespace DahuaSunriseSunset
 
 		private void AddCameraForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			newCamera = new CameraDefinition(txtHostAndPort.Text, txtUser.Text, txtPass.Text, cbHttps.Checked, txtDayZoom.Text, txtDayFocus.Text, txtNightZoom.Text, txtNightFocus.Text, (int)nudLensCmdDelay.Value, GetSelectedProfile(cbSunriseProfile, Profile.Day), GetSelectedProfile(cbSunsetProfile, Profile.Night));
+			switch (cbCameraManufacturer.Text)
+			{
+				case "Dahua":
+					newCamera = new DahuaCameraDefinition(txtHostAndPort.Text, txtUser.Text, txtPass.Text, cbHttps.Checked, txtDayZoom.Text, txtDayFocus.Text, txtNightZoom.Text, txtNightFocus.Text, (int)nudLensCmdDelay.Value, GetSelectedProfile(cbSunriseProfile, Profile.Day), GetSelectedProfile(cbSunsetProfile, Profile.Night));
+					break;
+				case "Hikvision":
+					newCamera = new HikvisionCameraDefinition(txtHostAndPort.Text, txtUser.Text, txtPass.Text, cbHttps.Checked, txtDayZoom.Text, txtDayFocus.Text, txtNightZoom.Text, txtNightFocus.Text, (int)nudLensCmdDelay.Value, GetSelectedProfile(cbSunriseProfile, Profile.Day), GetSelectedProfile(cbSunsetProfile, Profile.Night));
+					break;
+			}
 		}
 
 		private void lblLensCmd_Click(object sender, EventArgs e)

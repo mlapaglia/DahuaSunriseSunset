@@ -1,4 +1,4 @@
-﻿namespace DahuaSunriseSunset
+﻿namespace SunriseSunset
 {
 	partial class ViewNextSunriseSunset
 	{

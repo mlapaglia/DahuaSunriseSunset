@@ -1,10 +1,10 @@
 # DahuaSunriseSunset
-A Windows Service which changes the profile of dahua cameras between Night and Day at each sunset and sunrise.
+A Windows Service which changes the profile of Dahua and Hikvision cameras between Night and Day at each sunset and sunrise.
 
 ## Requirements
 
 1) Windows OS
-2) One or more Dahua IP cameras to control, accessible by http or https.
+2) One or more Dahua/Hikvision IP cameras to control, accessible by http or https.
 
 ## Usage
 

@@ -25,4 +25,4 @@ The buttons `Simulate Sunrise` and `Simulate Sunset` will cause the program to e
 
 ## Building from source
 
-This project is built with Visual Studio 2017 (Community Edition).  To build from source, you will also need my general-purpose utility library, which must be downloaded separately, here: https://github.com/bp2008/BPUtil
+This project is built with Visual Studio 2017 (Community Edition).  This package relies on https://www.nuget.org/packages/BPUtil/ . The source code is found here https://github.com/bp2008/BPUtil

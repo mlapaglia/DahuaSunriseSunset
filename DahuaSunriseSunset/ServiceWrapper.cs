@@ -78,17 +78,7 @@ namespace SunriseSunset
 							nextEvent = new SunEvent(sunCalculation.NextRise, false); // Rise and set are at the same time ... lets just call it a sunset.
 						}
 
-						// Now we know when the next event is and what type it is, so we know what profile the cameras should be now.
-						if (nextEvent.Rise)
-						{
-							// Next event is a sunrise, which means it is currently Night.
-							TriggerSunActions(nextEvent.Time, Profile.Night);
-						}
-						else
-						{
-							// Next event is a sunset, which means it is currently Day.
-							TriggerSunActions(nextEvent.Time, Profile.Day);
-						}
+						SetCameraCurrentProfile(nextEvent);
 
 						while (DateTime.Now <= nextEvent.Time)
 						{
@@ -105,6 +95,18 @@ namespace SunriseSunset
 			}
 			catch (ThreadAbortException) { }
 			catch (Exception ex) { Logger.Debug(ex); }
+		}
+
+		private static void SetCameraCurrentProfile(SunEvent nextEvent)
+		{
+			if (nextEvent.Rise)
+			{
+				TriggerSunActions(nextEvent.Time, Profile.Night);
+			}
+			else
+			{
+				TriggerSunActions(nextEvent.Time, Profile.Day);
+			}
 		}
 
 		public static void TriggerSunActions(DateTime nextEventTime, Profile profile)

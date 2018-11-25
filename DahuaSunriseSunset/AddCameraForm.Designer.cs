@@ -92,7 +92,7 @@
 			// 
 			// txtUser
 			// 
-			this.txtUser.Location = new System.Drawing.Point(15, 112);
+			this.txtUser.Location = new System.Drawing.Point(15, 126);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(248, 20);
 			this.txtUser.TabIndex = 3;
@@ -100,7 +100,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 96);
+			this.label2.Location = new System.Drawing.Point(12, 110);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(60, 13);
 			this.label2.TabIndex = 2;
@@ -108,7 +108,7 @@
 			// 
 			// txtPass
 			// 
-			this.txtPass.Location = new System.Drawing.Point(15, 151);
+			this.txtPass.Location = new System.Drawing.Point(15, 174);
 			this.txtPass.Name = "txtPass";
 			this.txtPass.Size = new System.Drawing.Size(248, 20);
 			this.txtPass.TabIndex = 5;
@@ -116,7 +116,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(12, 135);
+			this.label3.Location = new System.Drawing.Point(12, 158);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(53, 13);
 			this.label3.TabIndex = 4;
@@ -125,7 +125,7 @@
 			// cbHttps
 			// 
 			this.cbHttps.AutoSize = true;
-			this.cbHttps.Location = new System.Drawing.Point(15, 177);
+			this.cbHttps.Location = new System.Drawing.Point(15, 203);
 			this.cbHttps.Name = "cbHttps";
 			this.cbHttps.Size = new System.Drawing.Size(146, 17);
 			this.cbHttps.TabIndex = 7;
@@ -265,7 +265,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(12, 206);
+			this.label8.Location = new System.Drawing.Point(12, 241);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(77, 13);
 			this.label8.TabIndex = 23;
@@ -274,7 +274,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(12, 239);
+			this.label9.Location = new System.Drawing.Point(12, 269);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(75, 13);
 			this.label9.TabIndex = 24;
@@ -284,7 +284,7 @@
 			// 
 			this.cbSunriseProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbSunriseProfile.FormattingEnabled = true;
-			this.cbSunriseProfile.Location = new System.Drawing.Point(109, 203);
+			this.cbSunriseProfile.Location = new System.Drawing.Point(109, 236);
 			this.cbSunriseProfile.Name = "cbSunriseProfile";
 			this.cbSunriseProfile.Size = new System.Drawing.Size(154, 21);
 			this.cbSunriseProfile.TabIndex = 8;
@@ -293,7 +293,7 @@
 			// 
 			this.cbSunsetProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbSunsetProfile.FormattingEnabled = true;
-			this.cbSunsetProfile.Location = new System.Drawing.Point(109, 236);
+			this.cbSunsetProfile.Location = new System.Drawing.Point(109, 266);
 			this.cbSunsetProfile.Name = "cbSunsetProfile";
 			this.cbSunsetProfile.Size = new System.Drawing.Size(154, 21);
 			this.cbSunsetProfile.TabIndex = 9;
@@ -320,7 +320,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(576, 295);
+			this.ClientSize = new System.Drawing.Size(576, 298);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.cbCameraManufacturer);
 			this.Controls.Add(this.label10);

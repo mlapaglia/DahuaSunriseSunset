@@ -9,7 +9,13 @@ namespace SunriseSunset
 		{
 		}
 
-		public HikvisionCameraDefinition(string hostAndPort, string user, string pass, bool https) : base(hostAndPort, user, pass, https)
+		public HikvisionCameraDefinition(string hostAndPort,
+			string user,
+			string pass,
+			bool https) : base(hostAndPort,
+				user,
+				pass,
+				https)
 		{
 			HostAndPort = hostAndPort;
 			Username = user;
@@ -17,15 +23,28 @@ namespace SunriseSunset
 			UseHttps = https;
 		}
 
-		public HikvisionCameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
+		public HikvisionCameraDefinition(string hostAndPort,
+			string user,
+			string pass,
+			bool https,
+			string dayZoom,
+			string dayFocus,
+			string nightZoom,
+			string nightFocus,
+			int lensDelay,
+			Profile sunriseProfile,
+			Profile sunsetProfile) : base(hostAndPort,
+				user,
+				pass,
+				https,
+				dayZoom,
+				dayFocus,
+				nightZoom,
+				nightFocus,
+				lensDelay,
+				sunriseProfile,
+				sunsetProfile)
 		{
-			DayZoom = dayZoom;
-			DayFocus = dayFocus;
-			NightZoom = nightZoom;
-			NightFocus = nightFocus;
-			SecondsBetweenLensCommands = lensDelay;
-			SunriseProfile = sunriseProfile;
-			SunsetProfile = sunsetProfile;
 			Manufacturer = CameraManufacturer.Hikvision;
 		}
 

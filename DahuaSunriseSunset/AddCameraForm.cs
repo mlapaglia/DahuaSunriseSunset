@@ -84,10 +84,30 @@ namespace SunriseSunset
 			switch (cbCameraManufacturer.Text)
 			{
 				case "Dahua":
-					newCamera = new DahuaCameraDefinition(txtHostAndPort.Text, txtUser.Text, txtPass.Text, cbHttps.Checked, txtDayZoom.Text, txtDayFocus.Text, txtNightZoom.Text, txtNightFocus.Text, (int)nudLensCmdDelay.Value, GetSelectedProfile(cbSunriseProfile, Profile.Day), GetSelectedProfile(cbSunsetProfile, Profile.Night));
+					newCamera = new DahuaCameraDefinition(txtHostAndPort.Text,
+						txtUser.Text,
+						txtPass.Text,
+						cbHttps.Checked,
+						txtDayZoom.Text,
+						txtDayFocus.Text,
+						txtNightZoom.Text,
+						txtNightFocus.Text,
+						(int)nudLensCmdDelay.Value,
+						GetSelectedProfile(cbSunriseProfile, Profile.Day),
+						GetSelectedProfile(cbSunsetProfile, Profile.Night));
 					break;
 				case "Hikvision":
-					newCamera = new HikvisionCameraDefinition(txtHostAndPort.Text, txtUser.Text, txtPass.Text, cbHttps.Checked, txtDayZoom.Text, txtDayFocus.Text, txtNightZoom.Text, txtNightFocus.Text, (int)nudLensCmdDelay.Value, GetSelectedProfile(cbSunriseProfile, Profile.Day), GetSelectedProfile(cbSunsetProfile, Profile.Night));
+					newCamera = new HikvisionCameraDefinition(txtHostAndPort.Text,
+						txtUser.Text,
+						txtPass.Text,
+						cbHttps.Checked,
+						txtDayZoom.Text,
+						txtDayFocus.Text,
+						txtNightZoom.Text,
+						txtNightFocus.Text,
+						(int)nudLensCmdDelay.Value,
+						GetSelectedProfile(cbSunriseProfile, Profile.Day),
+						GetSelectedProfile(cbSunsetProfile, Profile.Night));
 					break;
 			}
 		}

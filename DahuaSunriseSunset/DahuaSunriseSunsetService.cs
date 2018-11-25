@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using DahuaSunriseSunset.Utilities;
 using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using BPUtil;
 
 namespace SunriseSunset
 {
@@ -21,13 +13,13 @@ namespace SunriseSunset
 
 		protected override void OnStart(string[] args)
 		{
-			Logger.Info("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStart");
+			Logger.LogMessage("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStart", System.Diagnostics.EventLogEntryType.Information);
 			ServiceWrapper.Start();
 		}
 
 		protected override void OnStop()
 		{
-			Logger.Info("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStop");
+			Logger.LogMessage("SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service OnStop", System.Diagnostics.EventLogEntryType.Information);
 			ServiceWrapper.Stop();
 		}
 	}

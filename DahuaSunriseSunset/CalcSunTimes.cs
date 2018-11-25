@@ -1,5 +1,5 @@
-﻿using System;
-using BPUtil;
+﻿using DahuaSunriseSunset.Utilities;
+using System;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //  
@@ -151,7 +151,7 @@ internal sealed class SunTimes
 
 			if ((Sign(zone) == Sign(lon)) && (zone != 0))
 			{
-				Logger.Info("WARNING: time zone and longitude are incompatible!");
+				Logger.LogMessage("WARNING: time zone and longitude are incompatible!", System.Diagnostics.EventLogEntryType.Error);
 				return false;
 			}
 

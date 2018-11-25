@@ -29,7 +29,7 @@ namespace SunriseSunset
 			if (Environment.UserInteractive)
 			{
 				string Title = "SunriseSunset " + Assembly.GetEntryAssembly().GetName().Version.ToString() + " Service Manager";
-				Logger.Info(Title + " Startup");
+				DahuaSunriseSunset.Utilities.Logger.LogMessage(Title + " Startup", System.Diagnostics.EventLogEntryType.Information);
 				string ServiceName = "SunriseSunset";
 				ButtonDefinition btnConfigure = new ButtonDefinition("Configure Service", btnConfigure_Click);
 				ButtonDefinition btnSimulateSunrise = new ButtonDefinition("Simulate Sunrise", btnSimulateSunrise_Click);

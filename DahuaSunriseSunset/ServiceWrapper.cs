@@ -111,7 +111,7 @@ namespace SunriseSunset
 
 		public static void TriggerSunActions(DateTime nextEventTime, Profile profile)
 		{
-			Logger.Info("TriggerSunActions");
+			DahuaSunriseSunset.Utilities.Logger.LogMessage("TriggerSunActions", System.Diagnostics.EventLogEntryType.Information);
 
 			lock (SyncLockCameraControl)
 			{
@@ -207,7 +207,7 @@ namespace SunriseSunset
 			{
 				if (DateTime.Now >= nextEventTime)
 				{
-					Logger.Info("Cancelled web request (" + uri + ") due to the next event time being reached.");
+					DahuaSunriseSunset.Utilities.Logger.LogMessage("Cancelled web request (" + uri + ") due to the next event time being reached.", System.Diagnostics.EventLogEntryType.Error);
 					return;
 				}
 
@@ -227,11 +227,11 @@ namespace SunriseSunset
 				catch (ThreadAbortException) { throw; }
 				catch (Exception ex)
 				{
-					Logger.Info("Exception thrown attempting web request (" + uri + "): " + ex.Message);
+					DahuaSunriseSunset.Utilities.Logger.LogMessage("Exception thrown attempting web request (" + uri + "): " + ex.Message, System.Diagnostics.EventLogEntryType.Error);
 
-					if(requestAttempts > 5)
+					if (requestAttempts > 5)
 					{
-						Logger.Info("Attempted to make a request 5 times, aborting");
+						DahuaSunriseSunset.Utilities.Logger.LogMessage("Attempted to make a request 5 times, aborting", System.Diagnostics.EventLogEntryType.Error);
 						return;
 					}
 

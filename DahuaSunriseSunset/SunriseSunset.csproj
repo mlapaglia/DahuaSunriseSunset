@@ -106,6 +106,7 @@
     <Compile Include="Forms\ViewNextSunriseSunset.Designer.cs">
       <DependentUpon>ViewNextSunriseSunset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

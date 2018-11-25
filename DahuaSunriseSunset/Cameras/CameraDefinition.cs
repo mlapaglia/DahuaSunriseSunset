@@ -22,7 +22,10 @@ namespace SunriseSunset
 		{
 		}
 
-		public CameraDefinition(string hostAndPort, string user, string pass, bool https)
+		public CameraDefinition(string hostAndPort,
+			string user,
+			string pass,
+			bool https)
 		{
 			HostAndPort = hostAndPort;
 			Username = user;
@@ -30,7 +33,20 @@ namespace SunriseSunset
 			UseHttps = https;
 		}
 
-		public CameraDefinition(string hostAndPort, string user, string pass, bool https, string dayZoom, string dayFocus, string nightZoom, string nightFocus, int lensDelay, Profile sunriseProfile, Profile sunsetProfile) : this(hostAndPort, user, pass, https)
+		public CameraDefinition(string hostAndPort,
+			string user,
+			string pass,
+			bool https,
+			string dayZoom,
+			string dayFocus,
+			string nightZoom,
+			string nightFocus,
+			int lensDelay,
+			Profile sunriseProfile,
+			Profile sunsetProfile) : this(hostAndPort,
+				user,
+				pass,
+				https)
 		{
 			DayZoom = dayZoom;
 			DayFocus = dayFocus;

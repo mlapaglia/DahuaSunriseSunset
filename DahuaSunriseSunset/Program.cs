@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BPUtil;
 using BPUtil.Forms;
@@ -21,7 +17,7 @@ namespace SunriseSunset
 		/// </summary>
 		static void Main()
 		{
-			string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+			string exePath = Assembly.GetExecutingAssembly().Location;
 			Globals.Initialize(exePath);
 			Directory.SetCurrentDirectory(Globals.ApplicationDirectoryBase);
 

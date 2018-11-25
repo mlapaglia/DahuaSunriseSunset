@@ -61,26 +61,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddCameraForm.cs">
+    <Compile Include="Forms\AddCameraForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddCameraForm.Designer.cs">
+    <Compile Include="Forms\AddCameraForm.Designer.cs">
       <DependentUpon>AddCameraForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CalcSunTimes.cs" />
-    <Compile Include="CameraHelpForm.cs">
+    <Compile Include="Forms\CameraHelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CameraHelpForm.Designer.cs">
+    <Compile Include="Forms\CameraHelpForm.Designer.cs">
       <DependentUpon>CameraHelpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Cameras\HikvisionCameraDefinition.cs" />
     <Compile Include="Cameras\DahuaCameraDefinition.cs" />
     <Compile Include="Cameras\CameraDefinition.cs" />
-    <Compile Include="ConfigurationForm.cs">
+    <Compile Include="Forms\ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigurationForm.Designer.cs">
+    <Compile Include="Forms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SunriseSunsetConfig.cs" />
@@ -94,16 +94,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceWrapper.cs" />
     <Compile Include="SunHelper.cs" />
-    <Compile Include="TextMessageBox.cs">
+    <Compile Include="Forms\TextMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TextMessageBox.Designer.cs">
+    <Compile Include="Forms\TextMessageBox.Designer.cs">
       <DependentUpon>TextMessageBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewNextSunriseSunset.cs">
+    <Compile Include="Forms\ViewNextSunriseSunset.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewNextSunriseSunset.Designer.cs">
+    <Compile Include="Forms\ViewNextSunriseSunset.Designer.cs">
       <DependentUpon>ViewNextSunriseSunset.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -113,19 +113,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AddCameraForm.resx">
+    <EmbeddedResource Include="Forms\AddCameraForm.resx">
       <DependentUpon>AddCameraForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CameraHelpForm.resx">
+    <EmbeddedResource Include="Forms\CameraHelpForm.resx">
       <DependentUpon>CameraHelpForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfigurationForm.resx">
+    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextMessageBox.resx">
+    <EmbeddedResource Include="Forms\TextMessageBox.resx">
       <DependentUpon>TextMessageBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewNextSunriseSunset.resx">
+    <EmbeddedResource Include="Forms\ViewNextSunriseSunset.resx">
       <DependentUpon>ViewNextSunriseSunset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

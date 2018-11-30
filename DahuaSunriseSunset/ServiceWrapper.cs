@@ -53,10 +53,12 @@ namespace SunriseSunset
 						SunriseSunsetConfig sunEventConfig = new SunriseSunsetConfig();
 						sunEventConfig.Load();
 						
-						SunHelper.SunHelperCalculation sunCalculation = SunHelper.CalculateDailySunEvents(sunEventConfig.Latitude,
+						SunHelper.SunHelperCalculation sunCalculation = SunHelper.CalculateDailySunEvents(
+							sunEventConfig.Latitude,
 							sunEventConfig.Longitude,
 							sunEventConfig.SunriseOffsetHours,
-							sunEventConfig.SunsetOffsetHours);
+							sunEventConfig.SunsetOffsetHours
+						);
 
 						if (!sunCalculation.TimeZoneAndLongitudeAreCompatible)
 						{
@@ -69,7 +71,7 @@ namespace SunriseSunset
 						{
 							nextEvent = new SunEvent(sunCalculation.NextRise, true);
 						}
-						else if (sunCalculation.NextRise < sunCalculation.NextRise)
+						else if (sunCalculation.NextSet < sunCalculation.NextRise)
 						{
 							nextEvent = new SunEvent(sunCalculation.NextSet, false);
 						}
